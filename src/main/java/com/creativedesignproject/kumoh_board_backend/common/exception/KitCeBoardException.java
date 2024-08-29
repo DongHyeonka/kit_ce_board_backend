@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 public abstract class KitCeBoardException extends NestedRuntimeException {
-    private ErrorCode errorCode;
+    private final ErrorCode errorCode;
 
     protected KitCeBoardException(ErrorCode errorCode) {
         super(errorCode.getMessage());

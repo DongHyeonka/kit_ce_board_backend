@@ -3,7 +3,7 @@ package com.creativedesignproject.kumoh_board_backend.common.util;
 import com.creativedesignproject.kumoh_board_backend.common.exception.ValidException;
 
 public final class Validator {
-    private Validator() {}
+    private Validator() {} // private 생성자를 통해서 외부에서 인스턴스화 하지 못하게 한다. 즉 순수 유틸리티 목적으로만 사용되도록 보장한다.
 
     /**
      * 문자열이 null 또는 공백인지 검사합니다.

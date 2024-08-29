@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.creativedesignproject.kumoh_board_backend.auth.dto.request.ChangeNicknameRequestDto;
 import com.creativedesignproject.kumoh_board_backend.auth.dto.request.ChangePasswordRequestDto;
 import com.creativedesignproject.kumoh_board_backend.auth.dto.request.EmailCertificationRequestDto;
-import com.creativedesignproject.kumoh_board_backend.auth.dto.request.SignInRequestDto;
+import com.creativedesignproject.kumoh_board_backend.auth.dto.request.LoginRequestDto;
 import com.creativedesignproject.kumoh_board_backend.auth.dto.request.SignUpRequestDto;
 import com.creativedesignproject.kumoh_board_backend.auth.dto.request.UserIdCheckRequestDto;
-import com.creativedesignproject.kumoh_board_backend.auth.dto.response.SignInResponseDto;
-import com.creativedesignproject.kumoh_board_backend.auth.service.AuthService;
+import com.creativedesignproject.kumoh_board_backend.auth.dto.response.LoginResponseDto;
+import com.creativedesignproject.kumoh_board_backend.auth.presentation.command.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +25,9 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class UserController {
     
-    private final AuthService authService;
+    private final UserService authService;
 
     @PostMapping("/emailCertification")
     public ResponseEntity<Void> emailCertification(@RequestBody @Valid EmailCertificationRequestDto requestBody) {
@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/signIn")
-    public ResponseEntity<SignInResponseDto> signIn(@RequestBody @Valid SignInRequestDto requestBody) {
+    public ResponseEntity<LoginResponseDto> signIn(@RequestBody @Valid LoginRequestDto requestBody) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.signIn(requestBody));
     }
 

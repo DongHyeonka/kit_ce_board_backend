@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.creativedesignproject.kumoh_board_backend.auth.domain.entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+    
     boolean existsByEmail(String email);
 
     Optional<User> findByEmail(String email);
@@ -15,5 +16,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByUserId(String userId);
     
-    User findByUserId(String userId);
+    Optional<User> findByUserId(String userId);
 }

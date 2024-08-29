@@ -76,8 +76,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void registerPost(PostBoardRequestDto dto, Long category_id, String userId) {
-        User user = userRepository.findByUserId(userId);
-        if(user == null) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
+        User user = userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 
         Category category = categoryRepository.findById(category_id).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_CATEGORY));
 
@@ -109,8 +108,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void patchPost(Long category_id, Long post_number, String userId, PatchBoardRequestDto dto) {
-        User user = userRepository.findByUserId(userId);
-        if(user == null) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
+        userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 
         categoryRepository.findById(category_id).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_CATEGORY));
 
@@ -163,8 +161,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public PutFavoriteResponseDto likeBoard(Long category_id, Long post_number, String userId) {
-        User user = userRepository.findByUserId(userId);
-        if(user == null) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
+        User user = userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 
         Post post = postRepository.findById(post_number).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_POST));
 
@@ -190,8 +187,7 @@ public class PostServiceImpl implements PostService{
     @Transactional
     @Override
     public void addComment(Long category_id, Long post_number, String userId, PostCommentRequestDto dto) {
-        User user = userRepository.findByUserId(userId);
-        if(user == null) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
+        User user = userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 
         Post post = postRepository.findById(post_number).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_POST));
 
@@ -215,7 +211,7 @@ public class PostServiceImpl implements PostService{
                 .contents(comment.getContents())
                 .userDto(UserDto.builder()
                     .nickname(comment.getUser().getNickname())
-                    .profile_image(comment.getUser().getProfile_image())
+                    .profile_image(comment.getUser().getProfileImage())
                     .build())
                 .subComments(buildSubCommentDtoList(comment.getSubcomments()))
                 .build();
@@ -231,7 +227,7 @@ public class PostServiceImpl implements PostService{
                 .content(subComment.getContent())
                 .userDto(UserDto.builder()
                     .nickname(subComment.getParentComment().getUser().getNickname())
-                    .profile_image(subComment.getParentComment().getUser().getProfile_image())
+                    .profile_image(subComment.getParentComment().getUser().getProfileImage())
                     .build())
                 .build())
             .collect(Collectors.toList());
@@ -253,8 +249,7 @@ public class PostServiceImpl implements PostService{
         boolean isExisted = userRepository.existsByUserId(userId);
         if (!isExisted) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
         
-        User user = userRepository.findByUserId(userId);
-        if(user == null) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
+        userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 
         postRepository.findById(post_number).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_POST));
 
@@ -277,7 +272,7 @@ public class PostServiceImpl implements PostService{
     private UserDto buildUserDto(Post post) {
         return UserDto.builder()
                 .nickname(post.getUser().getNickname())
-                .profile_image(post.getUser().getProfile_image())
+                .profile_image(post.getUser().getProfileImage())
                 .build();
     }
     

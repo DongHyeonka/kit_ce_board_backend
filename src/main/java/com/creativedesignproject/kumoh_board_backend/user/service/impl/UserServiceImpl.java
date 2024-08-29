@@ -20,14 +20,12 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public GetSignInUserResponseDto getSignInUser(String userId) {
-        User user = null;
-        user = userRepository.findByUserId(userId);
-        if(user == null) throw new BadRequestException(ErrorCode.NOT_EXISTED_USER);
+        User user = userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 
         return GetSignInUserResponseDto.builder()
                 .userId(user.getUserId())
                 .nickName(user.getNickname())
-                .profileImage(user.getProfile_image())
+                .profileImage(user.getProfileImage())
                 .build();
     }
 }

@@ -1,5 +1,6 @@
 package com.creativedesignproject.kumoh_board_backend.auth.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,17 +22,26 @@ import com.creativedesignproject.kumoh_board_backend.auth.infrastructure.resolve
 import com.creativedesignproject.kumoh_board_backend.common.interceptor.AnnotationDelegateInterceptor;
 import com.creativedesignproject.kumoh_board_backend.common.interceptor.HttpMethodDelegateInterceptor;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 @Configuration
-@RequiredArgsConstructor
 public class LoginConfig implements WebMvcConfigurer {
     private final AuthenticationTokenExtractor userAuthenticationTokenExtractor;
     private final AuthenticationTokenExtractor adminAuthenticationTokenExtractor;
     private final AuthenticationTokenExtractor compositeAuthenticationTokenExtractor;
     private final AuthenticateContext authenticateContext;
+
+    public LoginConfig(
+        @Qualifier("userAuthenticationTokenExtractor") AuthenticationTokenExtractor userAuthenticationTokenExtractor,
+        @Qualifier("adminAuthenticationTokenExtractor") AuthenticationTokenExtractor adminAuthenticationTokenExtractor,
+        @Qualifier("compositeAuthenticationTokenExtractor") AuthenticationTokenExtractor compositeAuthenticationTokenExtractor,
+        AuthenticateContext authenticateContext
+    ) {
+        this.userAuthenticationTokenExtractor = userAuthenticationTokenExtractor;
+        this.adminAuthenticationTokenExtractor = adminAuthenticationTokenExtractor;
+        this.compositeAuthenticationTokenExtractor = compositeAuthenticationTokenExtractor;
+        this.authenticateContext = authenticateContext;
+    }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {

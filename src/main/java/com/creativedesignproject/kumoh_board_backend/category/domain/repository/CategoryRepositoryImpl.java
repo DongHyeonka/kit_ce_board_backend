@@ -31,7 +31,7 @@ public class CategoryRepositoryImpl implements QuerydslCategoryRepository {
                             post.favorite_count,
                             post.comment_count,
                             post.view_count,
-                            Projections.constructor(UserDto.class, post.user.nickname, post.user.profile_image),
+                            Projections.constructor(UserDto.class, post.user.nickname, post.user.profileImage),
                             Projections.constructor(CategoryPostDto.class, post.category.name, Expressions.constant(null)),
                             post.updatedDate,
                             Expressions.constant(null)

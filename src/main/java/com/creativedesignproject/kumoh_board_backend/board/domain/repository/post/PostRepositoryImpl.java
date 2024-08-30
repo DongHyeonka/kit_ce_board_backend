@@ -56,7 +56,7 @@ public class PostRepositoryImpl implements QuerydslPostRepository {
                     post.favorite_count,
                     post.comment_count,
                     post.view_count,
-                    Projections.constructor(UserDto.class, post.user.nickname, post.user.profile_image),
+                    Projections.constructor(UserDto.class, post.user.nickname, post.user.profileImage),
                     Projections.constructor(CategoryPostDto.class, post.category.name, Expressions.constant(null)),
                     post.updatedDate,
                     Projections.list(
@@ -82,7 +82,7 @@ public class PostRepositoryImpl implements QuerydslPostRepository {
                 post.favorite_count,
                 post.comment_count,
                 post.view_count,
-                Projections.constructor(UserDto.class, post.user.nickname, post.user.profile_image),
+                Projections.constructor(UserDto.class, post.user.nickname, post.user.profileImage),
                 Projections.constructor(CategoryPostDto.class, post.category.name, Expressions.constant(null)),
                 post.updatedDate,
                 Projections.constructor(ImageDto.class, image.url)
@@ -106,7 +106,7 @@ public class PostRepositoryImpl implements QuerydslPostRepository {
                 post.favorite_count,
                 post.comment_count,
                 post.view_count,
-                Projections.constructor(UserDto.class, post.user.nickname, post.user.profile_image),
+                Projections.constructor(UserDto.class, post.user.nickname, post.user.profileImage),
                 Projections.constructor(CategoryPostDto.class, post.category.name, Expressions.constant(null)),
                 post.updatedDate,
                 Projections.constructor(ImageDto.class, image.url)
@@ -137,7 +137,7 @@ public class PostRepositoryImpl implements QuerydslPostRepository {
                 post.favorite_count,
                 post.comment_count,
                 post.view_count,
-                Projections.constructor(UserDto.class, post.user.nickname, post.user.profile_image),
+                Projections.constructor(UserDto.class, post.user.nickname, post.user.profileImage),
                 Projections.constructor(CategoryPostDto.class, post.category.name, Expressions.constant(null)),
                 post.updatedDate,
                 Projections.constructor(ImageDto.class, image.url)

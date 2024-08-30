@@ -2,7 +2,6 @@ package com.creativedesignproject.kumoh_board_backend.category.presentation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,21 +28,18 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @PostMapping("/register")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> registerCategory(@RequestBody Category categoryEntity) {
         categoryService.registerCategory(categoryEntity);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PatchMapping("/update/{category_id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> updateCategory(@PathVariable Long category_id, @RequestBody @Valid UpdateCategoryRequestDto dto) {
         categoryService.updateCategory(category_id, dto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{category_id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long category_id) {
         categoryService.deleteCategoryName(category_id);
         return ResponseEntity.ok().build();

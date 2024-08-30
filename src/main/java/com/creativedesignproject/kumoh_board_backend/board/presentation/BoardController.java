@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,29 +35,25 @@ public class BoardController {
     private final PostService boardService;
     
     @GetMapping("/{category_id}/{post_number}")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<PostDto> getPost(@PathVariable Long category_id, @PathVariable Long post_number) {
         PostDto postDto = boardService.getPost(category_id, post_number);
         return ResponseEntity.status(HttpStatus.OK).body(postDto);
     }
 
     @PostMapping("/{category_id}/register")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Void> registerPost(@RequestBody @Valid PostBoardRequestDto dto, @PathVariable Long category_id, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<Void> registerPost(@RequestBody @Valid PostBoardRequestDto dto, @PathVariable Long category_id, String userId) {
         boardService.registerPost(dto, category_id, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/{category_id}/{post_number}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Void> deletePost(@PathVariable Long category_id, @PathVariable Long post_number, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long category_id, @PathVariable Long post_number, String userId) {
         boardService.deletePost(category_id, post_number, userId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{category_id}/{post_number}")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Void> patchPost(@PathVariable Long category_id, @PathVariable Long post_number, @AuthenticationPrincipal String userId,@RequestBody @Valid PatchBoardRequestDto dto) {
+    public ResponseEntity<Void> patchPost(@PathVariable Long category_id, @PathVariable Long post_number, String userId,@RequestBody @Valid PatchBoardRequestDto dto) {
         boardService.patchPost(category_id, post_number, userId, dto);
         return ResponseEntity.ok().build();
     }
@@ -89,22 +83,19 @@ public class BoardController {
     }
 
     @GetMapping("/main-list")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<CategoryPostDto>> getCategoryOfBoardList() {
         List<CategoryPostDto> categoryOfBoardList = boardService.getCategoryOfBoardList();
         return ResponseEntity.status(HttpStatus.OK).body(categoryOfBoardList);
     }
 
     @PutMapping("/{category_id}/{post_number}/favorite")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<PutFavoriteResponseDto> likeBoard(@PathVariable Long category_id, @PathVariable Long post_number, @AuthenticationPrincipal String userId) {
+    public ResponseEntity<PutFavoriteResponseDto> likeBoard(@PathVariable Long category_id, @PathVariable Long post_number, String userId) {
         PutFavoriteResponseDto putFavoriteResponseDto = boardService.likeBoard(category_id, post_number, userId);
         return ResponseEntity.status(HttpStatus.OK).body(putFavoriteResponseDto);
     }
 
     @PostMapping("/{category_id}/{post_number}/comment")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<Void> addComment(@PathVariable Long category_id, @PathVariable Long post_number, @AuthenticationPrincipal String userId, @RequestBody @Valid PostCommentRequestDto dto) {
+    public ResponseEntity<Void> addComment(@PathVariable Long category_id, @PathVariable Long post_number, String userId, @RequestBody @Valid PostCommentRequestDto dto) {
         boardService.addComment(category_id, post_number, userId, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -118,16 +109,14 @@ public class BoardController {
     }
 
     @PostMapping("/{category_id}/{post_number}/subComment")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<Void> addSubComment(@PathVariable Long category_id,
-            @PathVariable Long post_number, @AuthenticationPrincipal String userId,
+            @PathVariable Long post_number, String userId,
             @RequestBody @Valid PostSubCommentRequestDto dto) {
         boardService.addSubComment(category_id, post_number, userId, dto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/{category_id}/{post_number}/comment-list")
-    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<CommentDto>> getCommentList(@PathVariable Long category_id, @PathVariable Long post_number) {
         List<CommentDto> commentList = boardService.getCommentList(category_id, post_number);
         return ResponseEntity.status(HttpStatus.OK).body(commentList);

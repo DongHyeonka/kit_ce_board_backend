@@ -1,7 +1,6 @@
 package com.creativedesignproject.kumoh_board_backend.user.controller;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,7 @@ public class UserControllers {
     private final UserServices userService;
     
     @GetMapping("/info")
-    public ResponseEntity<GetSignInUserResponseDto> getSignInUser(@AuthenticationPrincipal String userId) {
+    public ResponseEntity<GetSignInUserResponseDto> getSignInUser(String userId) {
         GetSignInUserResponseDto responseDto = userService.getSignInUser(userId);
         return ResponseEntity.ok().body(responseDto);
     }

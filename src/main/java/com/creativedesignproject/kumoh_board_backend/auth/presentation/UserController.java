@@ -2,8 +2,6 @@ package com.creativedesignproject.kumoh_board_backend.auth.presentation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -54,16 +52,14 @@ public class UserController {
     }
 
     @PatchMapping("/changePassword")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Void> changePassword(@AuthenticationPrincipal String userId,
+    public ResponseEntity<Void> changePassword(String userId,
                                                               @RequestBody @Valid ChangePasswordRequestDto dto) {
         authService.changePassword(userId, dto);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/changeNickname")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<Void> changeNickname(@AuthenticationPrincipal String userId,
+    public ResponseEntity<Void> changeNickname(String userId,
                                                               @RequestBody @Valid ChangeNicknameRequestDto dto) {
         authService.changeNickname(userId, dto);
         return ResponseEntity.ok().build();

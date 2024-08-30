@@ -1,4 +1,4 @@
-package com.creativedesignproject.kumoh_board_backend.user.service.impl;
+package com.creativedesignproject.kumoh_board_backend.user.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,17 +8,15 @@ import com.creativedesignproject.kumoh_board_backend.auth.domain.repository.User
 import com.creativedesignproject.kumoh_board_backend.common.exception.BadRequestException;
 import com.creativedesignproject.kumoh_board_backend.common.exception.ErrorCode;
 import com.creativedesignproject.kumoh_board_backend.user.dto.response.GetSignInUserResponseDto;
-import com.creativedesignproject.kumoh_board_backend.user.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserServiceImpl implements UserService {
+public class UserServices {
     private final UserRepository userRepository;
     
-    @Override
     public GetSignInUserResponseDto getSignInUser(String userId) {
         User user = userRepository.findByUserId(userId).orElseThrow(() -> new BadRequestException(ErrorCode.NOT_EXISTED_USER));
 

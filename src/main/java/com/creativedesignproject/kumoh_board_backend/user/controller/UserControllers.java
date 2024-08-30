@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.creativedesignproject.kumoh_board_backend.user.dto.response.GetSignInUserResponseDto;
-import com.creativedesignproject.kumoh_board_backend.user.service.UserService;
+import com.creativedesignproject.kumoh_board_backend.user.service.UserServices;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
-public class UserController {
-    private final UserService userService;
+public class UserControllers {
+    private final UserServices userService;
     
     @GetMapping("/info")
     public ResponseEntity<GetSignInUserResponseDto> getSignInUser(@AuthenticationPrincipal String userId) {

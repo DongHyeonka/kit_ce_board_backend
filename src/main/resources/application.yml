@@ -1,10 +1,12 @@
-#server port
 server:
     port: 4000
 
 spring:
     profiles:
         default: local
+    
+    application:
+        name: kit_ce_board
     
     config:
         import:
@@ -15,6 +17,32 @@ spring:
         multipart:
             max-file-size: 5MB
             max-request-size: 5MB
+
+management:
+    server:
+        port: 4001
+    info:
+        java:
+            enabled: true
+        os:
+            enabled: true
+        env:
+            enabled: true
+    endpoints:
+        enabled-by-default: false
+        web:
+            exposure:
+                include: info, health, prometheus
+        jmx:
+            exposure:
+                exclude: '*'
+    endpoint:
+        info:
+            enabled: true
+        health:
+            enabled: true
+        prometheus:
+            enabled: true
 
 #JWT Secret Key 설정
 secret:
